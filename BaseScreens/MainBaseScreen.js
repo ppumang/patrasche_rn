@@ -10,9 +10,25 @@ import Feather from 'react-native-vector-icons/Feather';
 import FeedBaseScreen from './FeedBaseScreen';
 import ProfileBaseScreen from '../BaseScreens/ProfileBaseScreen';
 import UploadBaseScreen from '../BaseScreens/UploadBaseScreen';
+import { askPermission } from '../Lib/upload';
+import { useNavigation } from '@react-navigation/native';
 
 
 function MainBaseScreen(props) {
+
+    const uploadMediaCallback = (res) => {
+        let assets = res.assets;
+        if (!assets) return;
+        let media = assets[0];
+        props.navigation.navigate("UploadBase", {
+            screen: "Upload",
+            params: {
+                media
+            }
+        })
+    }
+
+
     return (
         <MainBottomTab.Navigator
             activeColor={'dodgerblue'}
@@ -48,6 +64,13 @@ function MainBaseScreen(props) {
                             size={25}
                         />
                     ),
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        // Prevent default action
+                        e.preventDefault();
+                        askPermission(uploadMediaCallback);
+                    },
                 }}
             />
             <MainBottomTab.Screen

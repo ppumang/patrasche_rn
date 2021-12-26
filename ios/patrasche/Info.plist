@@ -70,5 +70,29 @@
 	<string>Zocial.ttf</string>
 	<string>Fontisto.ttf</string>
 	</array>
+
+  <key>NSCameraUsageDescription</key>
+  <string>Patrasche wants to access your camera</string>
+  <key>NSContactsUsageDescription</key>
+  <string>Patrasche wants to access your contacts</string>
+  <key>NSFaceIDUsageDescription</key>
+  <string>Do you want to use Face-id in Patrasche?</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Allow location while using the app</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Always allow location</string>
+  <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+  <dict>
+    <key>temporary</key>
+    <string>temporarirly allow location</string>
+  </dict>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Allow location when using</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Patrasche wants to access your microphone</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Patrasche wants to access your photo library</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Patrasche wants to access your photo library for add only</string>
 </dict>
 </plist>
