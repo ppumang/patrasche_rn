@@ -6,15 +6,18 @@ import { useIsFocused } from '@react-navigation/native';
 
 function FeedScreen(props) {
     const screenIsFocused = useIsFocused();
-    let feedData = ['https://patrasche.s3.ap-northeast-2.amazonaws.com/media/videos/dog3.mp4']
+    let feedData = [];
+    for (let i = 1; i < 3; i++) {
+        feedData.push(`https://patrasche.s3.ap-northeast-2.amazonaws.com/media/videos/dog${i}.mp4`)
+    }
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = () => {
         setRefreshing(true);
         setTimeout(() => { setRefreshing(false) }, 3000)
     }
+    const window = Dimensions.get('window')
 
     const renderItem = ({ item }) => {
-        const window = Dimensions.get('window')
         return <TouchableOpacity style={{ flex: 1 }}>
             <Video source={{ uri: item }}   // Can be a URL or a local file.
                 ref={(ref) => {
@@ -22,10 +25,12 @@ function FeedScreen(props) {
                 }}                                      // Store reference
                 onBuffer={this.onBuffer}                // Callback when remote video is buffering
                 onError={this.videoError}               // Callback when video cannot be loaded
-                style={{ height: window.height }}
+                style={{ height: window.height - getStatusBarHeight() }}
                 repeat={true}
                 playInBackground={false}
                 paused={!screenIsFocused}
+                muted={true}
+                resizeMode='cover'
             />
         </TouchableOpacity>
     };
@@ -38,6 +43,10 @@ function FeedScreen(props) {
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }
+                showsVerticalScrollIndicator={false}
+                snapToInterval={window.height}
+                snapToAlignment='start'
+                decelerationRate={'fast'}
             // onEndReachedThreshold={0.5}
             // onEndReached={onRefresh}
             />
