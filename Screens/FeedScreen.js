@@ -6,6 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 function FeedScreen(props) {
     const screenIsFocused = useIsFocused();
+    const [viewIndex, setViewIndex] = useState(0);
     let feedData = [];
     for (let i = 1; i < 3; i++) {
         feedData.push(`https://patrasche.s3.ap-northeast-2.amazonaws.com/media/videos/dog${i}.mp4`)
@@ -17,7 +18,7 @@ function FeedScreen(props) {
     }
     const window = Dimensions.get('window')
 
-    const renderItem = ({ item }) => {
+    const renderItem = ({ item, index }) => {
         return <TouchableOpacity style={{ flex: 1 }}>
             <Video source={{ uri: item }}   // Can be a URL or a local file.
                 ref={(ref) => {
@@ -28,7 +29,7 @@ function FeedScreen(props) {
                 style={{ height: window.height - getStatusBarHeight() }}
                 repeat={true}
                 playInBackground={false}
-                paused={!screenIsFocused}
+                paused={!screenIsFocused || viewIndex !== index}
                 muted={true}
                 resizeMode='cover'
             />
@@ -47,6 +48,10 @@ function FeedScreen(props) {
                 snapToInterval={window.height}
                 snapToAlignment='start'
                 decelerationRate={'fast'}
+                onScroll={(e) => {
+                    let idx = Math.round(e.nativeEvent.contentOffset.y / window.height);
+                    setViewIndex(idx);
+                }}
             // onEndReachedThreshold={0.5}
             // onEndReached={onRefresh}
             />
